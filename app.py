@@ -1,11 +1,16 @@
-from flask import Blueprint, jsonify
+from flask import Flask
+from status import status_bp   # عدل الاسم حسب ملفك
 
-status_bp = Blueprint("status", __name__)
+def create_app():
+    app = Flask(__name__)
 
-@status_bp.route("/api/status", methods=["GET"])
-def status():
-    return jsonify({
-        "status": "online",
-        "service": "Aquila AI Backend",
-        "version": "1.0"
-    })
+    # Register Blueprints
+    app.register_blueprint(status_bp)
+
+    return app
+
+
+app = create_app()
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
